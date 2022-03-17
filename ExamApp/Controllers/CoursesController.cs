@@ -5,21 +5,30 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExamApp.Controllers;
 
-public class CoursesController: ControllerBase
+public class CoursesController : ControllerBase
 {
     private IStudentsService _service;
 
     public CoursesController(IStudentsService service)
     {
-        _service = service;
+        this._service = service;
     }
 
+    // Method never gets invoked.
     [HttpGet]
     public IActionResult GetAll()
     {
-        return Ok(_service.GetCourses());
+        try
+        {
+            return Ok(_service.GetCourses());
+        }
+        catch (Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
+    // Method never gets invoked.
     [HttpPost]
     public IActionResult AddStudentToCourse(int studentId, Guid courseId)
     {

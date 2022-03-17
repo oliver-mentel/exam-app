@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ExamApp.Context;
 using ExamApp.Services;
 using Microsoft.AspNetCore.Builder;
@@ -9,35 +6,41 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace ExamApp;
 
 public class Program
 {
+    private readonly IConfiguration _configuration;
+    public Program(IConfiguration configuration)
+    {
+        this._configuration = configuration;
+    }
+
     public static void Main(string[] args)
     {
         // Uncomment for dev
-        //var db = new MainContext();
+        var db = new MainContext();
 
-        //for (var i = 0; i < 10; i++)
-        //{
-        //    db.Languages.Add(new Language(Guid.NewGuid(), $"Lang {i}"));
-        //}
+        for (var i = 0; i < 10; i++)
+        {
+            db.Languages.Add(new Language(Guid.NewGuid(), $"Lang {i}"));
+        }
 
-        //db.SaveChanges();
+        db.SaveChanges();
 
         CreateApp(args).Run();
     }
 
     public static WebApplication CreateApp(string[] args)
     {
-        var builder = WebApplication.CreateBuilder(args);
+
+        WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddControllers();
         builder.Services.AddTransient<IStudentsService, StudentsService>();
 
-        var app = builder.Build();
+        WebApplication app = builder.Build();
 
         if (app.Environment.IsDevelopment())
         {
