@@ -14,9 +14,10 @@ public class StudentsController : ControllerBase
 
     public StudentsController(IStudentsService service)
     {
-        _service = service;
+        this._service = service;
     }
 
+    // Method never gets invoked.
     [HttpGet]
     public IActionResult GetAll()
     {
@@ -30,6 +31,7 @@ public class StudentsController : ControllerBase
         }
     }
 
+    // Method never gets invoked.
     [HttpGet]
     public IActionResult Get(int id)
     {
@@ -43,12 +45,13 @@ public class StudentsController : ControllerBase
         }
     }
 
+    // Method never gets invoked.
     [HttpPost]
     public IActionResult Create(Student student)
     {
         try
         {
-            return Ok(_service.AddStudend(student));
+            return Ok(_service.AddStudent(student));
         }
         catch (Exception e)
         {
@@ -56,6 +59,7 @@ public class StudentsController : ControllerBase
         }
     }
 
+    // Method never gets invoked.
     [HttpPost]
     public IActionResult Update(int id, Student student)
     {
